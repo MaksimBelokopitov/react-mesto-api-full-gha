@@ -11,7 +11,6 @@ const errorHandler = require('./middlewares/error-handler');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-
 const { PORT, DB } = process.env;
 const { login, createUsers } = require('./controller/users');
 
