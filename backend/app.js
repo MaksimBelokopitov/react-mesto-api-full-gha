@@ -10,6 +10,7 @@ const { createUserValidation, loginValidation } = require('./middlewares/validat
 const errorHandler = require('./middlewares/error-handler');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const { PORT, DB } = process.env;
 const { login, createUsers } = require('./controller/users');
@@ -24,6 +25,7 @@ const app = express();
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
+app.use(cors);
 app.use(limiter);
 app.use(requestLogger);
 
