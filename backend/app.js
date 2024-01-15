@@ -17,11 +17,11 @@ const { PORT, DB } = process.env;
 const { login, createUsers } = require('./controller/users');
 
 
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000,
-//   max: 100,
-//   message: 'Превышен лимит запросов, попробуйте позже.',
-// });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Превышен лимит запросов, попробуйте позже.',
+});
 
 const app = express();
 app.use(cors)
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
 
-//app.use(limiter);
+app.use(limiter);
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
