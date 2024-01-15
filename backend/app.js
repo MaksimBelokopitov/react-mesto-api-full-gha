@@ -12,10 +12,8 @@ const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 
-
 const { PORT, DB } = process.env;
 const { login, createUsers } = require('./controller/users');
-
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -24,7 +22,7 @@ const limiter = rateLimit({
 });
 
 const app = express();
-app.use(cors)
+app.use(cors);
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
@@ -36,7 +34,7 @@ app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-}); 
+});
 
 app.post('/signup', createUserValidation, createUsers);
 app.post('/signin', loginValidation, login);
@@ -59,4 +57,4 @@ mongoose.connect(DB)
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-})
+});

@@ -2,12 +2,11 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequest = require('../errors/BadRequest');
 const UserRulesErrors = require('../errors/UserRulesError');
-const { log } = require('winston');
 
 module.exports.getAllCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      res.status(200).send(cards)
+      res.status(200).send(cards);
     })
     .catch((err) => {
       next(err);
@@ -61,7 +60,6 @@ module.exports.likeCard = (req, res, next) => {
   )
     .orFail(new Error('NotValidId'))
     .then((result) => {
-      console.log(result);
       res.status(200).send(result);
     })
     .catch((err) => {
@@ -83,8 +81,6 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .orFail(new Error('NotValidId'))
     .then((result) => {
-      console.log('b');
-      console.log(result);
       res.status(200).send(result);
     })
     .catch((err) => {

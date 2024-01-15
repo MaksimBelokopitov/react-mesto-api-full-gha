@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequest = require('../errors/BadRequest');
 const EmailError = require('../errors/EmailError');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getAllUsers = (req, res, next) => {
@@ -45,19 +46,19 @@ module.exports.createUsers = (req, res, next) => {
       User.create({
         name, about, avatar, email, password: hash,
       })
-      .then(() => res.status(201).send({
-        name, about, avatar, email,
-      }))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          next(new BadRequest('Переданы некорректные данные при создании пользователя.'));
-        } else if (err.code === 11000) {
-          next(new EmailError('Пользователь с указанным почтой уже существует'));
-        } else {
-          next(err);
-        }
-      })
-    })
+        .then(() => res.status(201).send({
+          name, about, avatar, email,
+        }))
+        .catch((err) => {
+          if (err.name === 'ValidationError') {
+            next(new BadRequest('Переданы некорректные данные при создании пользователя.'));
+          } else if (err.code === 11000) {
+            next(new EmailError('Пользователь с указанным почтой уже существует'));
+          } else {
+            next(err);
+          }
+        });
+    });
 };
 
 module.exports.updateUser = (req, res, next) => {
@@ -110,16 +111,18 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id },
-      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-      { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
       res
         .cookie('jwt', token, {
           maxAge: 3600000,
           httpOnly: true,
-          sameSite: true
+          sameSite: true,
         })
-        .send({token});
+        .send({ token });
     })
     .catch((err) => {
       next(err);
