@@ -2,10 +2,13 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequest = require('../errors/BadRequest');
 const UserRulesErrors = require('../errors/UserRulesError');
+const { log } = require('winston');
 
 module.exports.getAllCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.status(200).send({ data: cards }))
+    .then((cards) => {
+      res.status(200).send(cards)
+    })
     .catch((err) => {
       next(err);
     });
@@ -16,7 +19,7 @@ module.exports.createCards = (req, res, next) => {
   const owner = req.user._id;
 
   Card.create({ name, link, owner })
-    .then((card) => res.status(201).send({ data: card }))
+    .then((card) => res.status(201).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequest('Переданы некорректные данные при создании карточки.'));
@@ -58,7 +61,8 @@ module.exports.likeCard = (req, res, next) => {
   )
     .orFail(new Error('NotValidId'))
     .then((result) => {
-      res.status(200).send({ data: result });
+      console.log(result);
+      res.status(200).send(result);
     })
     .catch((err) => {
       if (err.message === 'NotValidId') {
@@ -79,7 +83,9 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .orFail(new Error('NotValidId'))
     .then((result) => {
-      res.status(200).send({ data: result });
+      console.log('b');
+      console.log(result);
+      res.status(200).send(result);
     })
     .catch((err) => {
       if (err.message === 'NotValidId') {

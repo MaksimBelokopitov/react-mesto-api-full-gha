@@ -68,7 +68,7 @@ module.exports.updateUser = (req, res, next) => {
   })
     .orFail(new Error('NotValidId'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user.toJSON());
     })
     .catch((err) => {
       if (err.message === 'NotValidId') {
@@ -91,7 +91,7 @@ module.exports.updateUserAvatar = (req, res, next) => {
   })
     .orFail(new Error('NotValidId'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user.toJSON());
     })
     .catch((err) => {
       if (err.message === 'NotValidId') {
@@ -117,8 +117,9 @@ module.exports.login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000,
           httpOnly: true,
+          sameSite: true
         })
-        .send({ token });
+        .send({token});
     })
     .catch((err) => {
       next(err);
@@ -129,7 +130,7 @@ module.exports.getActiveUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new Error('NotValidId'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user.toJSON());
     })
     .catch((err) => {
       if (err.message === 'NotValidId') {

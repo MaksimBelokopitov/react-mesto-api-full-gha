@@ -1,16 +1,19 @@
+
+
 const allowedCors = [
-    'http://mesta.nomoredomainsmonster.ru',
-    'http://mesta.nomoredomainsmonster.ru',
-    'localhost:3000'
-  ];
+  'http://mesta.nomoredomainsmonster.ru',
+  'https://mesta.nomoredomainsmonster.ru',
+  'https://api.mesta.nomoredomainsmonster.ru',
+  'http://api.mesta.nomoredomainsmonster.ru',
+];
 
   const cors = (req, res, next) => {
     const { origin } = req.headers; 
     const { method } = req; 
 
     const requestHeaders = req.headers['access-control-request-headers']; 
-    const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"; 
-
+    const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"; 
+    res.header('Access-Control-Allow-Credentials', true)
     if (allowedCors.includes(origin)) {
         res.header('Access-Control-Allow-Origin', origin);
     }

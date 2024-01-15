@@ -6,9 +6,8 @@ module.exports = (req, res, next) => {
   const userToken = req.cookies.jwt;
 
   if (!userToken) {
-    next(new AuthError('Необходима регистрация.'));
+    next(new AuthError('Необходима регистрация'));
   }
-
   let payload;
 
   try {
