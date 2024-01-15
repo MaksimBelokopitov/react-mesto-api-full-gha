@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.mesta.nomoredomainsmonster.ru/';
+export const BASE_URL = 'https://api.mesta.nomoredomainsmonster.ru';
 
 function getRequest(url, options) {
   return fetch(url, options)
@@ -38,6 +38,7 @@ export const authorize = (email, password) => {
   };
 
   export const checkToken =(token) => {
+    console.log(token);
     return getRequest(`${BASE_URL}/users/me`, {
       method: 'GET',
       credentials: 'include',

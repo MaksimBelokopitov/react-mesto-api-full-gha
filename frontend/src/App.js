@@ -27,20 +27,6 @@ function App() {
   const [cards, setCards] = useState([]);
  
 
-  function handleTokenCheck (token) {
-    if (localStorage.getItem('jwt')){
-      auth.checkToken(token)
-      .then((data) => {
-          setUserEmail(data.email);
-          setIsLogin(true);
-          navigate("/", {replace: true})
-      })
-      .catch((err) => {
-        localStorage.removeItem('jwt')
-        console.log(`Ошибка.....: ${err}`);
-      });
-    };
-  };
 
   useEffect(() =>{
     const token = localStorage.getItem('jwt');
@@ -55,6 +41,23 @@ function App() {
     });
     }
   },[isLogin]);
+
+
+  function handleTokenCheck (token) {
+    if (localStorage.getItem('jwt')){
+      auth.checkToken(token)
+      .then((data) => {
+          console.log(data);
+          setUserEmail(data.email);
+          setIsLogin(true);
+          navigate("/", {replace: true})
+      })
+      .catch((err) => {
+        localStorage.removeItem('jwt')
+        console.log(`Ошибка.....: ${err}`);
+      });
+    };
+  };
 
   
  useEffect(() =>{
