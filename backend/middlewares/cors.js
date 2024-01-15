@@ -3,6 +3,7 @@ const allowedCors = [
   'https://mesta.nomoredomainsmonster.ru',
   'https://api.mesta.nomoredomainsmonster.ru',
   'http://api.mesta.nomoredomainsmonster.ru',
+  'http://:localhost:3000'
 ];
 
 const cors = (req, res, next) => {
