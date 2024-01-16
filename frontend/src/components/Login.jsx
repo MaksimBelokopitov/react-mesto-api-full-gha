@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 import * as auth from '../utils/auth';
 import AuthForm from './AuthForm';
 
-const Login = () => {
+const Login = ({handleInfoOpen}) => {
 
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
@@ -35,8 +35,11 @@ const Login = () => {
           navigate('/', {replace: true});
         }
       })
-      .catch(err => console.log(err));
-  };
+      .catch((err) => {
+        console.log(err);
+        handleInfoOpen()
+      });
+    };
  
     return(
       <main className="login">

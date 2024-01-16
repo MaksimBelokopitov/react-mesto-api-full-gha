@@ -26,9 +26,8 @@ app.use(cors);
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
-
-app.use(limiter);
 app.use(requestLogger);
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {

@@ -218,7 +218,7 @@ function App() {
               />
             } 
           />
-          <Route path="sign-in" element={<Login />} />
+          <Route path="sign-in" element={<Login handleInfoOpen={handleInfoOpen} />} />
           <Route path="/sign-up" element={<Register handleInfoOpen={handleInfoOpen} handleRegOk={handleRegOk} />}/>
           </Routes>
           {isLogin&&<Footer />}
